@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Home Blog</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h1>Blog Lists: </h1>
+    <ul>
+    <% blogs.forEach(blog => { %>
+      <li>
+        <a href="/detail?blog_id=<%= blog.id %>"><%= blog.title %></a>  
+      </li> 
+    <% }) %>
+    </ul>
+
+  <form action="http://localhost:3000/" method="POST">
+
+    <input type="text" name="page">
+    <input type="submit" value="page">
+    </form>
+
+ <form action="http://localhost:3000/users/new" method="GET">
+
+         <input type="submit" value="New">
+    </form> 
+
+  </body>
+</html>
