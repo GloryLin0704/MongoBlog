@@ -9,21 +9,25 @@
     <ul>
     <% blogs.forEach(blog => { %>
       <li>
-        <a href="/detail?blog_id=<%= blog.id %>"><%= blog.title %></a>  
+        <a href="/api/detail?blog_id=<%= blog.id %>"><%= blog.title %></a>  
       </li> 
     <% }) %>
     </ul>
 
-  <form action="http://localhost:3000/" method="POST">
+   <form action="http://localhost:3000/api/list" method="GET">
 
     <input type="text" name="page">
     <input type="submit" value="page">
-    </form>
-
- <form action="http://localhost:3000/users/new" method="GET">
+    </form> 
+       
+  <form action="http://localhost:3000/users/new" method="GET">
 
          <input type="submit" value="New">
-    </form> 
-
+    </form>
+    <% if(username){ %>
+      <li>
+        <a href="/users/loginOut"><%= username %> 注销</a>  
+      </li> 
+      <% } %>  
   </body>
 </html>

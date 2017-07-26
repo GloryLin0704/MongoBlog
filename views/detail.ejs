@@ -8,13 +8,32 @@
     <ul>
     
       <li>
-       <%= blog.content %></br>
+       <p class="title">Content</p>
+       <p><%= blog.content %></p> 
+       
+      </li>
+
+      <li>
+       Time：<%= blog.time %></br>
+      </li> 
+      
+      <li>
+       Author：<%= blog.author %></br>
+      </li> 
+
+       <li>
+        <a href="/users/updata?id=<%= blog.id%>&content=<%= blog.content%>">编辑</a>  
       </li> 
 
       <li>
-       <%= blog.time %></br>
+        <a href="/users/delete?id=<%= blog.id%>">删除</a>  
       </li> 
-      
+
+
+      <form action="http://localhost:3000/api/comment?username=<%=username%>" method="POST">
+      Comment: <input type="content" name="comment" >  <br>
+        <input type="submit" value="updata">
+       </form>
     </ul>
     
   </body>
