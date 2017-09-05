@@ -32,7 +32,6 @@ router.post('/register',function(req,res){
 
   MongoClient.connect(DB_CONN_STR, function(err, db) {
     insertUser(db, data,  function(result) {
-        console.log(result);
         db.close();
      });
   }) 
@@ -60,7 +59,6 @@ router.post('/', function(req, res, next) {
   var hash = crypto.createHash('sha256', secret)
           .update(password).digest('hex');
 
-
   if(username === "" || password === ""){
     res.render('loginFail');
     return;
@@ -69,7 +67,7 @@ router.post('/', function(req, res, next) {
 	MongoClient.connect(DB_CONN_STR, function(err, db) {
 		selectUser(db, username, function(result){
       if (Object.keys(result).length === 0){
-        res.send('用户不存在');
+  	     res.send('用户不存在');
         return;
       } else if (hash === result[0].password){
           auth.cookies(req, res, username);
@@ -93,8 +91,7 @@ router.post('/new', function(req, res, next) {
     function guid() {
         return (S4()+S4()+"-"+S4()+"-"+S4()+"-"+S4()+"-"+S4()+S4()+S4());
     }
-    var myID = "static" + guid();
-
+  var myID = "static" + guid();
 
   if (typeof blog === 'undefined' ||typeof tit === 'undefined'){
     res.render('fail');
@@ -129,8 +126,6 @@ router.get('/delete',function(req, res, next){
 router.get('/updata', function(req, res, next){
   var oldContent = req.query.content;
   var id = req.query.id;
-  console.log(id);
-  console.log(oldContent);
 
   res.render('updata', {
     content:oldContent,

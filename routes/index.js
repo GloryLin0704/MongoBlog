@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var selectData = require('../tools/db').selectData;
 var selectDataContent = require('../tools/db').selectDataContent;
+var insertComment = require('../tools/db').insertComment;
+var selectComment = require('../tools/db').selectComment;
 
 var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/Mongo';
@@ -28,12 +30,6 @@ router.get('/api/list', function(req, res, next) {
 				blogs: result,
 				username:author
 			});
-			// res.json({
-			// 	code:200,
-			// 	data:result,
-			// 	msg:'成功'
-
-			// });
 			db.close();
 		});
 	});
@@ -41,39 +37,38 @@ router.get('/api/list', function(req, res, next) {
 
 
 router.get('/api/detail',function(req, res, next){
-	var id = req.query.blog_id;
+	var id = req.query.id;
 	var username = req.cookies.username;
 
 	MongoClient.connect(DB_CONN_STR, function(err, db) {
 		selectDataContent(db, id, function(result) {
-			res.render('detail',{
-				blog: result[0],
-				username:username
-			});
-			// res.json({
-			// 	code:200,
-			// 	data:result[0],
-			// 	msg:'成功'
-			// })
+			MongoClient.connect(DB_CONN_STR, function(err, db) {
+				selectComment(db, id, function(comment) {
+					res.render('detail',{
+						blog: result[0],
+						username:username,
+						comments:comment
+							});
+					db.close();
+				});
+			})
 			db.close();
 		});
 	});
 })
 
-router.get('/api/comment',function(req, res, next){
+router.post('/api/comment',function(req, res, next){
 
 	var comment = req.body.comment;
 	var username = req.query.username;
+	var id = req.query.id;
+
+	var data = [{"username":username, "comment":comment, "id":id}];
 
 	MongoClient.connect(DB_CONN_STR, function(err, db) {
-		insertData(db, comment, username,  function(result) {
-			res.render('suc');
-			// res.json({
-			// 	code:200,
-			// 	data:result[0],
-			// 	msg:'成功'
-			// })
+		insertComment(db, data, function(result) {
 			db.close();
+			res.render('suc');
 		});
 	});
 })

@@ -2,24 +2,39 @@ var MongoClient = require('mongodb').MongoClient;
 var DB_CONN_STR = 'mongodb://localhost:27017/Mongo'; 
 
 var insertData = function(db, data, callback) {  
-    //连接到表
-    var collection = db.collection('DB');
-    //插入数据
-    collection.insert(data, function(err, result) { 
-        if(err)
-        {
-            console.log('Error:'+ err);
-            return;
-        }     
-        callback(result);
-    });
+
+  var collection = db.collection('DB');
+
+  collection.insert(data, function(err, result) { 
+    if(err)
+    {
+        console.log('Error:'+ err);
+        return;
+    }     
+    callback(result);
+  });
 }
 
 
+var insertComment = function(db, data, callback) {  
+
+  var collection = db.collection('comment');
+
+  collection.insert(data, function(err, result) { 
+    if(err)
+    {
+        console.log('Error:'+ err);
+        return;
+    }     
+    callback(result);
+  });
+}
+//添加评论
+
 var insertUser = function(db, data, callback) {  
-  //连接到表  
+  
   var collection = db.collection('User');
-  //插入数据
+  
   collection.insert(data, function(err, result){
     if(err)
     {
@@ -29,13 +44,13 @@ var insertUser = function(db, data, callback) {
     callback(result);
   });
 }
-
+//注册
 
 var selectData = function(db, page, callback) {  
-  //连接到表  
+  
   var collection = db.collection('DB');
-  //查询数据
   var whereStr = {"title":{$gte:""}};
+  
   collection.find(whereStr).limit(5).skip(page*5).toArray(function(err, result) {
     if(err)
     {
@@ -45,13 +60,29 @@ var selectData = function(db, page, callback) {
     callback(result);
   });
 }
+//
 
+var selectComment = function(db, id, callback) {  
+  
+  var collection = db.collection('comment');
+  var whereStr = {"id":id};
+
+  collection.find(whereStr).toArray(function(err, result) {
+    if(err)
+    {
+      console.log('Error:'+ err);
+      return;
+    }     
+    callback(result);
+  });
+}
+//选择评论
 
 var selectDataContent = function(db, id, callback) {  
-  //连接到表  
+  
   var collection = db.collection('DB');
-  //查询数据
   var whereStr = {"id":id};
+  
   collection.find(whereStr).toArray(function(err, result) {
     if(err)
     {
@@ -62,11 +93,12 @@ var selectDataContent = function(db, id, callback) {
   });
 }
 
+
 var selectUser = function(db, username, callback) {  
-  //连接到表  
+  
   var collection = db.collection('User');
-  //查询数据
   var whereStr = {"username":username};
+  
   collection.find(whereStr).toArray(function(err, result) {
     if(err)
     {
@@ -79,10 +111,10 @@ var selectUser = function(db, username, callback) {
  
 
 var deleteData = function(db, id, callback) {  
-  //连接到表  
+  
   var collection = db.collection('DB');
-  //删除数据
   var whereStr = {"id":id };
+  
   collection.remove(whereStr, function(err, result) {
     if(err)
     {
@@ -95,12 +127,11 @@ var deleteData = function(db, id, callback) {
 }
 
 var updateData = function(db, id, updata, date, callback) {  
-  //连接到表  
-  var collection = db.collection('DB');
-  //删除数据
   
+  var collection = db.collection('DB');
   var whereStr = {"id":id };
   var updateStr = {$set: { "content" : updata, "time":date}};
+  
   collection.update(whereStr, updateStr, function(err, result) {
     if(err)
     {
@@ -111,8 +142,6 @@ var updateData = function(db, id, updata, date, callback) {
   });
 }
 
-
-
 module.exports = {
     insertData:insertData,
     insertUser:insertUser,
@@ -120,5 +149,7 @@ module.exports = {
     selectData:selectData,
     deleteData:deleteData,
     updateData:updateData,
+    selectComment:selectComment,
+    insertComment:insertComment,
     selectDataContent:selectDataContent
     };

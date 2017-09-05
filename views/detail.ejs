@@ -30,7 +30,14 @@
       </li> 
 
 
-      <form action="http://localhost:3000/api/comment?username=<%=username%>" method="POST">
+      <% comments.forEach(c => { %>
+      <li>
+        Person:<%=c.username %>         Comment:<%= c.comment %>
+      </li> 
+    <% }) %>
+    </ul>
+
+      <form action="http://localhost:3000/api/comment?username=<%=username%>&id=<%= blog.id%>" method="POST">
       Comment: <input type="content" name="comment" >  <br>
         <input type="submit" value="updata">
        </form>
