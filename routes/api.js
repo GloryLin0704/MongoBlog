@@ -12,6 +12,12 @@ router.get('/', function(req, res, next){
     })
 })
 
+//注册
+router.use('/register', register);
+
+//登陆
+router.use('/login', login);
+
 //用户
 router.use('/user', user);
 
