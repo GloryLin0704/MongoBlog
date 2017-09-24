@@ -7,12 +7,10 @@ scheams.user = mongoose.Schema({
         type: String,
         required: true
     } ,
-    
     password: {
         type: String,
         required: true
     },
-
     email: {
         type: String,
         required: true
@@ -26,22 +24,14 @@ scheams.blog = mongoose.Schema({
         required: true
 
     },
-
     content: {
         type: String,
         required: true
     },
-
     time: {
         type: Date,
         default: Date.now
     },
-
-    id: {
-        type: String,
-        required: true 
-    },
-
     author: {
         type: String,
         required: true
@@ -54,12 +44,10 @@ scheams.comment = mongoose.Schema({
         type: String,
         required: true
     },
-
     comment: {
         type: String,
         required: true
     },
-
     id: { 
         type: String,
         required: true

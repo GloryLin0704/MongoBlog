@@ -18,9 +18,10 @@ router.post('/', function(req, res, next){
             var token = auth.get({
                 username: username
             });
-            res.setHeader('authorization', token);
+            // res.setHeader('authorization', token);
             res.json({
                 code: 200,
+                data: token,
                 msg: '登陆成功'
             }); 
         } else {
