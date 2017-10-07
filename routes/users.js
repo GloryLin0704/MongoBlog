@@ -11,6 +11,7 @@ router.post('/new', function(req, res){
         content: body.content,
         author: req.username
     });
+    console.log(req.username);
 
     data.save().then(suc => {
         res.json({
@@ -47,10 +48,11 @@ router.get('/del', function(req, res){
         });
     }, err => {
         console.log(err);
-
         res.json({
             code: 500, 
             err: err
         }); 
     });
 });
+
+module.exports = router; 

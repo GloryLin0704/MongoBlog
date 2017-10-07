@@ -5,7 +5,8 @@ var secret = 'TheBlogSecret';
 
 var { userModel } = require('../tools/db');
 
-router.post('/register', function(req, res){
+router.post('/', function(req, res){
+    // var password = req.body.password;
     var password = crypto.createHash('sha256', secret)
                     .update(req.body.password).digest('hex');
     
@@ -25,3 +26,4 @@ router.post('/register', function(req, res){
     });
 });
 
+module.exports = router; 

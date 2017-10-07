@@ -1,10 +1,17 @@
 var express = require('express');
 var router = express.Router();
 var crypto = require('crypto');
-var auth = require('')
+var auth = require('../tools/auth');
 var secret = 'TheBlogSecret'; 
 
 var { userModel } = require('../tools/db');
+
+router.get('/', (req, res) => {
+    res.json({
+        code: 200,
+        data: 'Welcome'    
+    });
+})
 
 router.post('/', function(req, res, next){
     var username = req.body.username;
@@ -33,18 +40,5 @@ router.post('/', function(req, res, next){
     });
 });
 
-router.all('*', function(req, res, next){
-    var token = req.headers.authorization;
-    var auth = auth.check(token);
 
-    if(auth){
-        console.log('用户：',auth.data.username);
-        req.username = auth.data.username;
-        next();
-    } else {
-        res.json({
-            code: 400,
-            msg: 'token 无效或过期 请重新登陆'
-        });
-    };
-});
+module.exports = router; 

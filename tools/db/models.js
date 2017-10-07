@@ -4,7 +4,7 @@ var mongoose = require('./connect');
 var schemasNames = Object.keys(schemas);
 
 var models = schemasNames.reduce((acc, name) => {
-    acc[name + 'Mdole'] = mongoose.model(
+    acc[name + 'Model'] = mongoose.model(
         name,
         schemas[name]
     );
