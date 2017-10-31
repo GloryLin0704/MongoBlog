@@ -5,7 +5,6 @@ const express = require('express')
 
 router.post('/new', function(req, res){
     var body = req.body;
-
     var data = new blogModel({
         title: body.title,
         content: body.content,
@@ -29,7 +28,7 @@ router.post('/new', function(req, res){
 
 router.get('/del', function(req, res){
     var username = req.username; 
-    var _id = req.query._id; 
+    var _id = req.query.id; 
 
     userModel.findOne({
         username: username
