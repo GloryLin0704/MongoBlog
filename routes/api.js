@@ -4,13 +4,11 @@ const express = require('express')
     , register = require('./register')
     , login  = require('./login')
     , filter = require('./filter')
-    , auth = require('../tools/auth');
+    , auth = require('../tools/auth')
+    , commnet = require('./comment');
     
-    // , eassy = require('./eassy')
-    // , commnet = require('./comment');
+    // , essay = require('./essay')
 
-
-    
 router.get('/', function(req, res, next){
     res.json({
         code: 200,
@@ -45,9 +43,9 @@ router.all('*', function(req, res, next){
 router.use('/users', users);
 
 //文章
-// router.use('/eassy', eassy);
+// router.use('/essay', essay);
 
 //评论
-// router.use('/comment', comment);
+ router.use('/comment', comment);
 
 module.exports = router;
